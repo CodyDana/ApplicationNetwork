@@ -8,14 +8,18 @@
 
 import UIKit
 
-class FirstViewController: UIViewController {
+class FirstViewController: UIViewController , UITableViewDataSource{
     
     // Array of type Coins
     var fetchedCoin = [Coins]()
     
+    @IBOutlet weak var coinTableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        coinTableView.dataSource = self
         
         let jsonUrlString = "https://api.coinmarketcap.com/v1/ticker/?start=0&limit=10"
         
@@ -52,22 +56,40 @@ class FirstViewController: UIViewController {
                 let percent_change_7d = eachItem["percent_change_7d"] as! String
                 let last_updated = eachItem["last_updated"] as! String
                 
-                print(name)
-                print(rank)
-                print(price_usd)
-                print(max_supply)
                 self.fetchedCoin.append(Coins(id: id, name: name, symbol: symbol, rank: rank, price_usd: price_usd, price_btc: price_btc, twentyFourHr_volume_usd: twentyFourHr_volume_usd, market_cap_usd: market_cap_usd, available_supply: available_supply, total_supply: total_supply, max_supply: max_supply, percent_change_1h: percent_change_1h, percent_change_24h: percent_change_24h, percent_change_7d: percent_change_7d, last_updated: last_updated))
             }
+            
+            // Reload data
+            self.coinTableView.reloadData()
+            
         } catch let jsonErr {
             print("Error serializing json:", jsonErr)
         }
 
             
         }.resume()
-//        downloadJSONWithURL {
-//            print("success");
-//        }
+    }
     
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+    
+    @available(iOS 2.0, *)
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return fetchedCoin.count
+    }
+    
+    
+    // Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
+    // Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing controls)
+    
+    @available(iOS 2.0, *)
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = coinTableView.dequeueReusableCell(withIdentifier: "cell")
+        cell?.textLabel?.text = fetchedCoin[indexPath.row].name
+        cell?.detailTextLabel?.text = fetchedCoin[indexPath.row].market_cap_usd
+        
+        return cell!
     }
 
     override func didReceiveMemoryWarning() {
