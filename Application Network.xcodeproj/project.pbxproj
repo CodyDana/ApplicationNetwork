@@ -13,6 +13,8 @@
 		B0C00F402012E48C00622FAA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0C00F3E2012E48C00622FAA /* Main.storyboard */; };
 		B0C00F422012E48C00622FAA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B0C00F412012E48C00622FAA /* Assets.xcassets */; };
 		B0C00F452012E48C00622FAA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0C00F432012E48C00622FAA /* LaunchScreen.storyboard */; };
+		B0C00F4D2013E4B200622FAA /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C00F4C2013E4B200622FAA /* SignInViewController.swift */; };
+		B0C00F4F20141E1F00622FAA /* CoinDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C00F4E20141E1F00622FAA /* CoinDetails.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		B0C00F412012E48C00622FAA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B0C00F442012E48C00622FAA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B0C00F462012E48C00622FAA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B0C00F4C2013E4B200622FAA /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		B0C00F4E20141E1F00622FAA /* CoinDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinDetails.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,11 +62,13 @@
 			children = (
 				B0C00F382012E48C00622FAA /* AppDelegate.swift */,
 				B0C00F3A2012E48C00622FAA /* FirstViewController.swift */,
+				B0C00F4E20141E1F00622FAA /* CoinDetails.swift */,
 				B0C00F3C2012E48C00622FAA /* SecondViewController.swift */,
 				B0C00F3E2012E48C00622FAA /* Main.storyboard */,
 				B0C00F412012E48C00622FAA /* Assets.xcassets */,
 				B0C00F432012E48C00622FAA /* LaunchScreen.storyboard */,
 				B0C00F462012E48C00622FAA /* Info.plist */,
+				B0C00F4C2013E4B200622FAA /* SignInViewController.swift */,
 			);
 			path = "Application Network";
 			sourceTree = "<group>";
@@ -139,9 +145,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0C00F4D2013E4B200622FAA /* SignInViewController.swift in Sources */,
 				B0C00F3D2012E48C00622FAA /* SecondViewController.swift in Sources */,
 				B0C00F392012E48C00622FAA /* AppDelegate.swift in Sources */,
 				B0C00F3B2012E48C00622FAA /* FirstViewController.swift in Sources */,
+				B0C00F4F20141E1F00622FAA /* CoinDetails.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
