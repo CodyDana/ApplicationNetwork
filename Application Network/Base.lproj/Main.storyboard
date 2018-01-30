@@ -317,11 +317,11 @@
             </objects>
             <point key="canvasLocation" x="-1166" y="546"/>
         </scene>
-        <!--Item-->
+        <!--Market-->
         <scene sceneID="dd7-3a-5YY">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Bpr-Rt-uUF" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="Tpd-Be-M1H"/>
+                    <tabBarItem key="tabBarItem" title="Market" id="Tpd-Be-M1H"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="c8K-Vq-gKF">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>

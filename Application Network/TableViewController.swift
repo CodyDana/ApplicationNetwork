@@ -9,7 +9,7 @@
 import UIKit
 import Foundation
 
-class TableViewController: UIViewController , UITableViewDataSource{
+class TableViewController: UIViewController , UITableViewDataSource, UISearchBarDelegate{
     
     // Array of type Coins
     var fetchedCoin = [Coins]()
@@ -21,6 +21,7 @@ class TableViewController: UIViewController , UITableViewDataSource{
         
         coinTableView.dataSource = self
         
+        searchBar()
         
         let jsonUrlString = "https://api.coinmarketcap.com/v1/ticker/?start=0&limit=10"
         
@@ -78,8 +79,31 @@ class TableViewController: UIViewController , UITableViewDataSource{
         return true
     }
     
+    func searchBar() {
+        let searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 50))
+        searchBar.delegate = self
+        searchBar.tintColor = UIColor.orange
+        self.coinTableView.tableHeaderView = searchBar
+    }
     
-    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        if searchText == "" {
+            coinTableView.reloadData()
+        }
+        else {
+            if searchBar.selectedScopeButtonIndex == 0 {
+                fetchedCoin = fetchedCoin.filter({ (name) -> Bool in
+                    return name.name.lowercased().contains(searchText.lowercased())
+                })
+            }
+            else {
+                fetchedCoin = fetchedCoin.filter({ (name) -> Bool in
+                    return name.name.lowercased().contains(searchText.lowercased())
+                })
+            }
+        }
+    }
     @available(iOS 2.0, *)
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return fetchedCoin.count
