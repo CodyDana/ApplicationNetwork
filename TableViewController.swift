@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Foundation
 
 class TableViewController: UIViewController , UITableViewDataSource{
     
@@ -15,24 +14,20 @@ class TableViewController: UIViewController , UITableViewDataSource{
     var fetchedCoin = [Coins]()
     
     @IBOutlet weak var coinTableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
         coinTableView.dataSource = self
         
-        
         let jsonUrlString = "https://api.coinmarketcap.com/v1/ticker/?start=0&limit=10"
         
         // Making sure this is a valid URL
         guard let url = URL(string:jsonUrlString) else { return }
         
-        
         URLSession.shared.dataTask(with: url) { (data, response, err) in
-    
-            // This solved the problem of the list not coming up immediately.
-            DispatchQueue.main.async {
-
+            
             guard let data = data else { return }
             
             do {
@@ -66,10 +61,11 @@ class TableViewController: UIViewController , UITableViewDataSource{
                 
                 // Reload data
                 self.coinTableView.reloadData()
+                
             } catch let jsonErr {
                 print("Error serializing json:", jsonErr)
             }
-            }
+            
             
             }.resume()
     }
@@ -77,8 +73,6 @@ class TableViewController: UIViewController , UITableViewDataSource{
     override var prefersStatusBarHidden: Bool {
         return true
     }
-    
-    
     
     @available(iOS 2.0, *)
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

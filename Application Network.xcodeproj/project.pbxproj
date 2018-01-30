@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B0B325A7201FEADB0016893B /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0B325A6201FEADB0016893B /* TableViewController.swift */; };
 		B0C00F392012E48C00622FAA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C00F382012E48C00622FAA /* AppDelegate.swift */; };
 		B0C00F3B2012E48C00622FAA /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C00F3A2012E48C00622FAA /* FirstViewController.swift */; };
 		B0C00F3D2012E48C00622FAA /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C00F3C2012E48C00622FAA /* SecondViewController.swift */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B0B325A6201FEADB0016893B /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		B0C00F352012E48C00622FAA /* Application Network.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Application Network.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0C00F382012E48C00622FAA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B0C00F3A2012E48C00622FAA /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
@@ -69,6 +71,7 @@
 				B0C00F432012E48C00622FAA /* LaunchScreen.storyboard */,
 				B0C00F462012E48C00622FAA /* Info.plist */,
 				B0C00F4C2013E4B200622FAA /* SignInViewController.swift */,
+				B0B325A6201FEADB0016893B /* TableViewController.swift */,
 			);
 			path = "Application Network";
 			sourceTree = "<group>";
@@ -146,6 +149,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B0C00F4D2013E4B200622FAA /* SignInViewController.swift in Sources */,
+				B0B325A7201FEADB0016893B /* TableViewController.swift in Sources */,
 				B0C00F3D2012E48C00622FAA /* SecondViewController.swift in Sources */,
 				B0C00F392012E48C00622FAA /* AppDelegate.swift in Sources */,
 				B0C00F3B2012E48C00622FAA /* FirstViewController.swift in Sources */,
@@ -311,6 +315,7 @@
 				B0C00F4B2012E48C00622FAA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
