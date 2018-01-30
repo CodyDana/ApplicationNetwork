@@ -19,9 +19,12 @@ class TableViewController: UIViewController , UITableViewDataSource, UISearchBar
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        self.parse()
+        self.searchBar()
+    }
+    
+    func parse() {
         coinTableView.dataSource = self
-        
-        searchBar()
         
         let jsonUrlString = "https://api.coinmarketcap.com/v1/ticker/?start=0&limit=10"
         
@@ -30,51 +33,50 @@ class TableViewController: UIViewController , UITableViewDataSource, UISearchBar
         
         
         URLSession.shared.dataTask(with: url) { (data, response, err) in
-    
+            
             // This solved the problem of the list not coming up immediately.
             DispatchQueue.main.async {
-
-            guard let data = data else { return }
-            
-            do {
-                let myJSON = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as! NSArray
-                //else { print("JSON error"); return }
                 
-                //print(myJSON)
-                for eachFetchedCoin in myJSON
-                {
-                    let eachItem = eachFetchedCoin as! [String : Any]
-                    let id = eachItem["id"] as! String
-                    let name = eachItem["name"] as! String
-                    let symbol = eachItem["symbol"] as! String
-                    let rank = eachItem["rank"] as! String
-                    let price_usd = eachItem["price_usd"] as! String
-                    let price_btc = eachItem["price_btc"] as! String
-                    let twentyFourHr_volume_usd = eachItem["24h_volume_usd"] as! String
-                    let market_cap_usd = eachItem["market_cap_usd"] as! String
-                    let available_supply = eachItem["available_supply"] as! String
-                    let total_supply = eachItem["total_supply"] as! String
+                guard let data = data else { return }
+                
+                do {
+                    let myJSON = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as! NSArray
+                    //else { print("JSON error"); return }
                     
-                    // Sometimes the max_supply isn't available for a coin
-                    let max_supply = eachItem["max_supply"] as? String ?? "---"
-                    let percent_change_1h = eachItem["percent_change_1h"] as! String
-                    let percent_change_24h = eachItem["percent_change_24h"] as! String
-                    let percent_change_7d = eachItem["percent_change_7d"] as! String
-                    let last_updated = eachItem["last_updated"] as! String
+                    //print(myJSON)
+                    for eachFetchedCoin in myJSON
+                    {
+                        let eachItem = eachFetchedCoin as! [String : Any]
+                        let id = eachItem["id"] as! String
+                        let name = eachItem["name"] as! String
+                        let symbol = eachItem["symbol"] as! String
+                        let rank = eachItem["rank"] as! String
+                        let price_usd = eachItem["price_usd"] as! String
+                        let price_btc = eachItem["price_btc"] as! String
+                        let twentyFourHr_volume_usd = eachItem["24h_volume_usd"] as! String
+                        let market_cap_usd = eachItem["market_cap_usd"] as! String
+                        let available_supply = eachItem["available_supply"] as! String
+                        let total_supply = eachItem["total_supply"] as! String
+                        
+                        // Sometimes the max_supply isn't available for a coin
+                        let max_supply = eachItem["max_supply"] as? String ?? "---"
+                        let percent_change_1h = eachItem["percent_change_1h"] as! String
+                        let percent_change_24h = eachItem["percent_change_24h"] as! String
+                        let percent_change_7d = eachItem["percent_change_7d"] as! String
+                        let last_updated = eachItem["last_updated"] as! String
+                        
+                        self.fetchedCoin.append(Coins(id: id, name: name, symbol: symbol, rank: rank, price_usd: price_usd, price_btc: price_btc, twentyFourHr_volume_usd: twentyFourHr_volume_usd, market_cap_usd: market_cap_usd, available_supply: available_supply, total_supply: total_supply, max_supply: max_supply, percent_change_1h: percent_change_1h, percent_change_24h: percent_change_24h, percent_change_7d: percent_change_7d, last_updated: last_updated))
+                    }
                     
-                    self.fetchedCoin.append(Coins(id: id, name: name, symbol: symbol, rank: rank, price_usd: price_usd, price_btc: price_btc, twentyFourHr_volume_usd: twentyFourHr_volume_usd, market_cap_usd: market_cap_usd, available_supply: available_supply, total_supply: total_supply, max_supply: max_supply, percent_change_1h: percent_change_1h, percent_change_24h: percent_change_24h, percent_change_7d: percent_change_7d, last_updated: last_updated))
+                    // Reload data
+                    self.coinTableView.reloadData()
+                } catch let jsonErr {
+                    print("Error serializing json:", jsonErr)
                 }
-                
-                // Reload data
-                self.coinTableView.reloadData()
-            } catch let jsonErr {
-                print("Error serializing json:", jsonErr)
-            }
             }
             
             }.resume()
     }
-    
     override var prefersStatusBarHidden: Bool {
         return true
     }
@@ -82,14 +84,16 @@ class TableViewController: UIViewController , UITableViewDataSource, UISearchBar
     func searchBar() {
         let searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 50))
         searchBar.delegate = self
-        searchBar.tintColor = UIColor.orange
+        searchBar.showsScopeBar = true
+        searchBar.tintColor = UIColor.lightGray
+        searchBar.scopeButtonTitles = ["Name", "Symbol"]
         self.coinTableView.tableHeaderView = searchBar
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
         if searchText == "" {
-            coinTableView.reloadData()
+            parse()
         }
         else {
             if searchBar.selectedScopeButtonIndex == 0 {
@@ -99,10 +103,12 @@ class TableViewController: UIViewController , UITableViewDataSource, UISearchBar
             }
             else {
                 fetchedCoin = fetchedCoin.filter({ (name) -> Bool in
-                    return name.name.lowercased().contains(searchText.lowercased())
+                    return name.symbol.lowercased().contains(searchText.lowercased())
                 })
             }
         }
+        
+        self.coinTableView.reloadData()
     }
     @available(iOS 2.0, *)
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -117,7 +123,7 @@ class TableViewController: UIViewController , UITableViewDataSource, UISearchBar
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = coinTableView.dequeueReusableCell(withIdentifier: "cell")
         cell?.textLabel?.text = fetchedCoin[indexPath.row].name
-        cell?.detailTextLabel?.text = fetchedCoin[indexPath.row].market_cap_usd
+        cell?.detailTextLabel?.text = fetchedCoin[indexPath.row].symbol
         
         return cell!
     }
