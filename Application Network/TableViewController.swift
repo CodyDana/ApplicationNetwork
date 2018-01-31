@@ -9,18 +9,24 @@
 import UIKit
 import Foundation
 
-class TableViewController: UIViewController , UITableViewDataSource, UISearchBarDelegate{
+class TableViewController: UIViewController , UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate{
     
     // Array of type Coins
     var fetchedCoin = [Coins]()
     
     @IBOutlet weak var coinTableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        coinTableView.delegate = self
+        coinTableView.dataSource = self
         self.parse()
         self.searchBar()
+        
+        let nibName = UINib(nibName: "TableViewCell", bundle: nil)
+        coinTableView.register(nibName, forCellReuseIdentifier: "tableViewCell")
     }
     
     func parse() {
@@ -121,11 +127,13 @@ class TableViewController: UIViewController , UITableViewDataSource, UISearchBar
     
     @available(iOS 2.0, *)
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = coinTableView.dequeueReusableCell(withIdentifier: "cell")
-        cell?.textLabel?.text = fetchedCoin[indexPath.row].name
-        cell?.detailTextLabel?.text = fetchedCoin[indexPath.row].symbol
+        let cell = coinTableView.dequeueReusableCell(withIdentifier: "tableViewCell") as! TableViewCell
         
-        return cell!
+        cell.commonInit(fetchedCoin[indexPath.row].name, symbol: fetchedCoin[indexPath.row].symbol)
+        //cell.nameLabel.text = fetchedCoin[indexPath.row].name
+        //cell.symbolLabel.text = fetchedCoin[indexPath.row].symbol
+        
+        return cell
     }
     
     override func didReceiveMemoryWarning() {
